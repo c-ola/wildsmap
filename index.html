@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Wilds Map</title>
+        <link rel="icon" type="image/x-icon" href="/wildsmap/assets/favicon-uf7dOdwc.ico">
+      <script type="module" crossorigin src="/wildsmap/assets/index-Dgi6nuld.js"></script>
+      <link rel="stylesheet" crossorigin href="/wildsmap/assets/index-26hXBQb_.css">
+    </head>
+    <body>
+        <div id="blurred-backdrop"></div>
+        <div class="side-pane">
+            <div class="side-pane-item" id="camera-position">Camera: (0, 0, 0), (0, 0, 0)</div>
+            <div class="side-pane-item" id="selected-item"> </div>
+        </div>
+
+        <div class="side-pane">
+            <div class="side-pane-item" id="filters">
+                <span style="font-weight: bold; color: lightgray">Filters</span>
+                <div>
+                    <input type="checkbox" class="all-filters" id="all-gimmicks" name="all-gimmicks" checked>
+                    <label for="slinger">Select All</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="collectable" name="collectable" checked>
+                    <label for="collectable">Collectables</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="trap" name="trap" checked>
+                    <label for="trap">Environment</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="hidden" name="hidden" checked>
+                    <label for="hidden">Hidden</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="non-filtering" name="non-filtering" checked>
+                    <label for="non-filtering">Non-Filtering</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="slinger" name="slinger" checked>
+                    <label for="slinger">Slinger</label>
+                </div>
+            </div>
+        </div>
+        <canvas id="webgl-canvas"></canvas>
+
+    </body>
+</html>
