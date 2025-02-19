@@ -6,8 +6,8 @@
         <link rel="icon" type="image/x-icon" href="/wildsmap/assets/favicon-uf7dOdwc.ico">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-      <script type="module" crossorigin src="/wildsmap/assets/index-Cggt-Bpr.js"></script>
-      <link rel="stylesheet" crossorigin href="/wildsmap/assets/index-CIRSgonx.css">
+      <script type="module" crossorigin src="/wildsmap/assets/index-B00S4Rp2.js"></script>
+      <link rel="stylesheet" crossorigin href="/wildsmap/assets/index-xoAHMusu.css">
     </head>
     <body>
         <div id="blurred-backdrop"></div>
@@ -17,39 +17,47 @@
         </div>
 
         <div class="side-pane">
-            <div class="side-pane-item" id="filters">
-                <span style="font-weight: bold; color: lightgray">Filters</span>
-                <div>
-                    <input type="checkbox" class="all-filters" id="all-gimmicks" name="all-gimmicks" checked>
-                    <label for="slinger">Select All</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="collectable" name="collectable" checked>
-                    <label for="collectable">Collectables</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="trap" name="trap" checked>
-                    <label for="trap">Environment</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="hidden" name="hidden" checked>
-                    <label for="hidden">Hidden</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="non-filtering" name="non-filtering" checked>
-                    <label for="non-filtering">Camps & Villages</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="slinger" name="slinger" checked>
-                    <label for="slinger">Slinger Ammo</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="endemic" name="endemic" checked>
-                    <label for="endemic">Endemic Life</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="areanumbers" name="areanumbers" checked>
-                    <label for="areanumbers">Area Numbers</label>
+            <div class="side-pane-item collapsable" id="filters">
+
+                <button class="toggleButton">
+                    <span class="arrow">▶</span> Filters
+                </button>
+                <div class="foldable">
+                    <div>
+                        <input type="text" class="search" id="search-filter" name="search-filter" checked>
+                    </div>
+                    <div>
+                        <input type="checkbox" class="all-filters" id="all-gimmicks" name="all-gimmicks" checked>
+                        <label for="all-gimmicks">Select All</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="collectable" name="collectable" checked>
+                        <label for="collectable">Collectables</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="trap" name="trap" checked>
+                        <label for="trap">Environment</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="hidden" name="hidden" checked>
+                        <label for="hidden">Hidden</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="non-filtering" name="non-filtering" checked>
+                        <label for="non-filtering">Camps & Villages</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="slinger" name="slinger" checked>
+                        <label for="slinger">Slinger Ammo</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="endemic" name="endemic" checked>
+                        <label for="endemic">Endemic Life</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" id="areanumbers" name="areanumbers" checked>
+                        <label for="areanumbers">Area Numbers</label>
+                    </div>
                 </div>
             </div>
         </div>
