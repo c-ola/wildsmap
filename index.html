@@ -6,17 +6,37 @@
         <link rel="icon" type="image/x-icon" href="/wildsmap/assets/favicon-uf7dOdwc.ico">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-      <script type="module" crossorigin src="/wildsmap/assets/index-BGbVpstL.js"></script>
-      <link rel="stylesheet" crossorigin href="/wildsmap/assets/index-xoAHMusu.css">
+      <script type="module" crossorigin src="/wildsmap/assets/index-CO3aGT9d.js"></script>
+      <link rel="stylesheet" crossorigin href="/wildsmap/assets/index-TmWf0qdt.css">
     </head>
     <body>
         <div id="blurred-backdrop"></div>
         <div class="side-pane">
-            <div class="side-pane-item" id="camera-position">Camera: (0, 0, 0), (0, 0, 0)</div>
+            <div class="side-pane-item" id="camera-position"></div>
+            <div class="side-pane-item language-box">
+                <label for="language">Language:</label>
+                <select class="language-dropdown" id="language" name="language">
+                    <option value="English">English</option>
+                    <option value="Japanese">Japanese</option>
+                    <option value="French">Français</option>
+                    <option value="Italian">Italian</option>
+                    <option value="German">Deutsch</option>
+                    <option value="Spanish">Spanish</option>
+                    <option value="Russian">Russian</option>
+                    <option value="Polish">Polish</option>
+                    <option value="PortugueseBr">Portuguese</option>
+                    <option value="Korean">Korean</option>
+                    <option value="TransitionalChinese">Trad. Chinese</option>
+                    <option value="SimplelifiedChinese">Simpl. Chinese</option>
+                    <option value="Arabic">Arabic</option>
+                    <option value="LatinAmericanSpanish">Lat. Amer. Spanish<option>
+                </select>
+            </div>
             <div class="side-pane-item" id="selected-item"> </div>
         </div>
 
         <div class="side-pane">
+
             <div class="side-pane-item collapsable" id="filters">
 
                 <button class="toggleButton">
@@ -27,8 +47,12 @@
                         <input type="text" class="search" id="search-filter" name="search-filter" checked>
                     </div>
                     <div>
-                        <input type="checkbox" class="all-filters" id="all-gimmicks" name="all-gimmicks" checked>
-                        <label for="all-gimmicks">Select All</label>
+                        <input type="checkbox" class="selectall" id="selectall" name="selectall" checked>
+                        <label for="selectall">Select All</label>
+                    </div>
+                    <div>
+                        <input type="checkbox" class="deselectall" id="deselect" name="deselect">
+                        <label for="deselect">Deselect All</label>
                     </div>
                     <div>
                         <input type="checkbox" id="collectable" name="collectable" checked>
