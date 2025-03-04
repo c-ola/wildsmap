@@ -245,6 +245,9 @@ class Stage {
     }
 }
 
+const st101 = new Stage("st101", "Windward Plains", "./assets/map.glb", scene);
+const sprites = [];
+
 const gimmicks = new Map();
 function loadGimmicks() {
     Object.entries(gimmick_data).forEach(([key, value]) => {
@@ -259,10 +262,46 @@ function loadGimmicks() {
                 value.color +
                 ".png";
         }
-        const texture = textureLoader.load(path);
+        const data = value;
+        textureLoader.load(path, (texture) => {
+            data.points.forEach((point) => {
+                if (point !== undefined) {
+                    const spriteMaterial = new THREE.SpriteMaterial({
+                        map: texture,
+                    });
+                    const sprite = new THREE.Sprite(spriteMaterial);
+                    sprite.position.set(point[0], point[1] + 5, point[2]);
+                    sprite.gimmickId = key;
+                    sprite.baseScaling = 1.0;
+                    sprite.aspectRatio = 1.0;
+                    sprite.scale.set(20 * sprite.aspectRatio, 20, 20);
+                    if (data.map_filtering_type === "NON_FILTERING_TARGET") {
+                        sprite.baseScaling = 1.5;
+                        sprite.position.set(point[0], point[1] + 10, point[2]);
+                    }
+                    if (data.map_filtering_type !== null) {
+                        st101.categories
+                            .get(data.map_filtering_type)
+                            .push(sprite);
+                    } else {
+                        st101.categories.get("INVISIBLE").push(sprite);
+                    }
+                    const weather = data.weather_environments;
+                    if (weather !== undefined) {
+                        weather.forEach((w) =>
+                            st101.categories.get(w).push(sprite)
+                        );
+                    }
+
+                    sprite.type = "GIMMICK";
+                    sprites.push(sprite);
+                    st101.gimmicks.push(sprite);
+                    scene.add(sprite);
+                }
+            });
+        });
         gimmicks.set(key, {
-            data: value,
-            texture: texture,
+            data: data,
         });
     });
 }
@@ -277,10 +316,43 @@ function loadEndemic() {
         } else {
             path = "./assets/enemy_icons/MHWilds-" + key + " Icon.png";
         }
-        const texture = textureLoader.load(path);
+        const data = value;
+        textureLoader.load(path, (texture) => {
+            STAGES.forEach((stid) => {
+                if (data[stid] !== undefined) {
+                    data[stid].points.forEach((point) => {
+                        if (point != undefined) {
+                            const spriteMaterial = new THREE.SpriteMaterial({
+                                map: texture,
+                            });
+                            const sprite = new THREE.Sprite(spriteMaterial);
+                            if (spriteMaterial.map.image !== null) {
+                                const width = spriteMaterial.map.image.width;
+                                const height = spriteMaterial.map.image.height;
+                                sprite.aspectRatio = width / height;
+                                console.log(width);
+                            } else {
+                                sprite.aspectRatio = 1.0;
+                            }
+                            sprite.scale.set(20 * sprite.aspectRatio, 20, 20);
+                            sprite.position.set(
+                                point[0],
+                                point[1] + 5,
+                                point[2]
+                            );
+                            sprite.emId = key;
+                            sprite.stageId = stid;
+                            sprite.type = "ENDEMIC";
+                            sprite.baseScaling = 1.0;
+                            sprites.push(sprite);
+                            st101.endemic.add(sprite);
+                        }
+                    });
+                }
+            });
+        });
         endemics.set(key, {
-            data: value,
-            texture: texture,
+            data: data,
         });
     });
 }
@@ -290,97 +362,39 @@ const areaNumbers = new Map();
 function loadAreaNumbers() {
     Object.entries(map_area_data).forEach(([key, value]) => {
         Object.entries(value).forEach(([area_num, point]) => {
-            const path = "./assets/map_nums/" + area_num + ".png";
-            const texture = textureLoader.load(path);
             const area = area_num.split("_");
             const st = area[0];
             const num = area[1];
             const name = `${MAP_NAMES.get(st)} ${num}`;
+            const data = {
+                point: point,
+                areaNum: area_num,
+                name: name,
+            };
             areaNumbers.set(area_num, {
-                data: {
-                    point: point,
-                    areaNum: area_num,
-                    name: name,
-                },
-                texture: texture,
+                data: data,
+            });
+            const path = "./assets/map_nums/" + area_num + ".png";
+            textureLoader.load(path, (texture) => {
+                const spriteMaterial = new THREE.SpriteMaterial({
+                    map: texture,
+                });
+                const sprite = new THREE.Sprite(spriteMaterial);
+                const point = data.point;
+                sprite.aspectRatio = texture.image.width / texture.image.height;
+                sprite.scale.set(20 * sprite.aspectRatio, 20, 20);
+                sprite.position.set(point[0], point[1] + 20, point[2]);
+                sprite.stageId = key;
+                sprite.areaId = area_num;
+                sprite.type = "AREA_NUMBER";
+                sprite.baseScaling = 1.0;
+                sprites.push(sprite);
+                st101.areaNumbers.add(sprite);
             });
         });
     });
 }
 loadAreaNumbers();
-
-const st101 = new Stage("st101", "Windward Plains", "./assets/map.glb", scene);
-const sprites = [];
-gimmicks.forEach((value, key) => {
-    value.data.points.forEach((point) => {
-        if (point !== undefined) {
-            const spriteMaterial = new THREE.SpriteMaterial({
-                map: value.texture,
-            });
-            const sprite = new THREE.Sprite(spriteMaterial);
-            sprite.scale.set(25, 25, 25);
-            sprite.position.set(point[0], point[1] + 5, point[2]);
-            sprite.gimmickId = key;
-            sprite.baseScaling = 1.0;
-            if (value.data.map_filtering_type === "NON_FILTERING_TARGET") {
-                sprite.baseScaling = 1.5;
-                sprite.position.set(point[0], point[1] + 10, point[2]);
-            }
-            if (value.data.map_filtering_type !== null) {
-                st101.categories
-                    .get(value.data.map_filtering_type)
-                    .push(sprite);
-            } else {
-                st101.categories.get("INVISIBLE").push(sprite);
-            }
-            const weather = value.data.weather_environments;
-            if (weather !== undefined) {
-                weather.forEach((w) => st101.categories.get(w).push(sprite));
-            }
-
-            sprite.type = "GIMMICK";
-            sprites.push(sprite);
-            st101.gimmicks.push(sprite);
-            scene.add(sprite);
-        }
-    });
-});
-
-endemics.forEach((value, key) => {
-    STAGES.forEach((stid) => {
-        if (value.data[stid] !== undefined) {
-            value.data[stid].points.forEach((point) => {
-                if (point != undefined) {
-                    const spriteMaterial = new THREE.SpriteMaterial({
-                        map: value.texture,
-                    });
-                    const sprite = new THREE.Sprite(spriteMaterial);
-                    sprite.scale.set(25, 25, 25);
-                    sprite.position.set(point[0], point[1] + 5, point[2]);
-                    sprite.emId = key;
-                    sprite.stageId = stid;
-                    sprite.type = "ENDEMIC";
-                    sprite.baseScaling = 1.0;
-                    sprites.push(sprite);
-                    st101.endemic.add(sprite);
-                }
-            });
-        }
-    });
-});
-
-areaNumbers.forEach((value, key) => {
-    const spriteMaterial = new THREE.SpriteMaterial({ map: value.texture });
-    const sprite = new THREE.Sprite(spriteMaterial);
-    const point = value.data.point;
-    sprite.scale.set(20, 20, 20);
-    sprite.position.set(point[0], point[1] + 20, point[2]);
-    sprite.areaId = key;
-    sprite.type = "AREA_NUMBER";
-    sprite.baseScaling = 1.0;
-    sprites.push(sprite);
-    st101.areaNumbers.add(sprite);
-});
 
 scene.add(st101.areaNumbers);
 scene.add(st101.endemic);
@@ -542,7 +556,7 @@ function updateSprites() {
     const scale = Math.max((32.0 * distance) / 700, 10.0);
     sprites.forEach((sprite) => {
         const s = scale * sprite.baseScaling;
-        sprite.scale.set(s, s, s);
+        sprite.scale.set(s * sprite.aspectRatio, s, 1);
     });
 }
 
