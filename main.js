@@ -326,14 +326,9 @@ function loadEndemic() {
                                 map: texture,
                             });
                             const sprite = new THREE.Sprite(spriteMaterial);
-                            if (spriteMaterial.map.image !== null) {
-                                const width = spriteMaterial.map.image.width;
-                                const height = spriteMaterial.map.image.height;
-                                sprite.aspectRatio = width / height;
-                                console.log(width);
-                            } else {
-                                sprite.aspectRatio = 1.0;
-                            }
+                            const width = spriteMaterial.map.image.width;
+                            const height = spriteMaterial.map.image.height;
+                            sprite.aspectRatio = width / height;
                             sprite.scale.set(20 * sprite.aspectRatio, 20, 20);
                             sprite.position.set(
                                 point[0],
